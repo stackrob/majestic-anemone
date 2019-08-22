@@ -1,0 +1,179 @@
+backend:
+  name: git-gateway
+  branch: master
+media_folder: blog/.vuepress/public/images
+public_folder: /images
+collections:
+  - name: config
+    label: Config
+    files:
+      - name: config
+        label: Config
+        file: blog/.vuepress/data/config.json
+        fields:
+          - widget: string
+            name: title
+            label: Title
+            required: true
+          - widget: text
+            name: description
+            label: Description
+            required: false
+            hint: Text shown under the main logo
+          - widget: string
+            name: base
+            label: Base
+            required: false
+            default: /vuepress-theme-casper/
+            hint: Base path under which the site will be served
+          - widget: object
+            name: themeConfig
+            label: Theme Config
+            required: false
+            fields:
+              - widget: image
+                name: cover
+                label: Cover
+                required: false
+                hint: Cover image shown on the home page
+              - widget: image
+                name: logo
+                label: Logo
+                required: false
+                hint: Logo image shown on the home page
+              - widget: list
+                name: nav
+                label: Top Navigation Menu
+                required: false
+                fields:
+                  - widget: string
+                    name: text
+                    label: Label
+                    required: true
+                  - widget: string
+                    name: link
+                    label: Link
+                    required: true
+                    hint: >-
+                      Link of the navigation item, e.g.: /posts or
+                      https://facebook.com
+              - widget: list
+                name: footer
+                label: Bottom Navigation Menu
+                required: false
+                fields:
+                  - widget: string
+                    name: text
+                    label: Label
+                    required: true
+                  - widget: string
+                    name: link
+                    label: Link
+                    required: true
+                    hint: >-
+                      Link of the navigation item, e.g.: /posts or
+                      https://facebook.com
+              - widget: object
+                name: social
+                label: Social
+                required: false
+                fields:
+                  - widget: string
+                    name: github
+                    label: Github Link
+                    required: false
+                  - widget: string
+                    name: twitter
+                    label: Twitter Link
+                    required: false
+  - name: home
+    label: Home
+    files:
+      - name: home
+        label: Home
+        file: blog/index.md
+        fields:
+          - widget: hidden
+            name: type
+            label: Type
+            required: true
+            default: home
+  - name: page
+    label: Pages
+    folder: blog/
+    create: true
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - widget: string
+        name: title
+        label: Title
+        required: true
+      - widget: hidden
+        name: type
+        label: Type
+        required: true
+        default: page
+      - widget: markdown
+        name: body
+        label: Content
+        required: false
+        hint: Page content
+    filter:
+      field: type
+      value: page
+  - name: post
+    label: Posts
+    folder: blog/posts
+    create: true
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - widget: string
+        name: title
+        label: Title
+        required: true
+      - widget: image
+        name: image
+        label: Image
+        required: false
+      - widget: date
+        name: publish
+        label: Date
+        required: true
+      - widget: list
+        name: tags
+        label: Tags
+        required: false
+        field:
+          label: String
+          name: string
+          widget: string
+      - widget: list
+        name: categories
+        label: categories
+        required: false
+        field:
+          label: Select
+          name: select
+          widget: select
+          options:
+            - dexter
+            - futurama
+      - widget: string
+        name: readingTime
+        label: Reading Time
+        required: false
+      - widget: hidden
+        name: type
+        label: Type
+        required: true
+        default: post
+      - widget: markdown
+        name: body
+        label: Content
+        required: false
+        hint: Page content
+    filter:
+      field: type
+      value: post
